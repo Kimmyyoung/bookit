@@ -66,3 +66,19 @@ export const updateRoomController = async (req: NextRequest, {params} : { params
 };
 
 
+export const deleteRoomController = async (req: NextRequest, { params }: { params: { id: string } }) => {
+  const room = await Room.findById(params.id);
+  if (!room) {
+    return NextResponse.json({
+      success: false,
+      message: "Room not found with this ID",
+    }, { status: 404 });
+  }
+
+  await room.deleteOne();
+
+  return NextResponse.json({
+    success: true,
+    message: "Room is deleted",
+  });
+};
