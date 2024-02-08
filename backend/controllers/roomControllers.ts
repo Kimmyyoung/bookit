@@ -1,49 +1,97 @@
 import { NextRequest, NextResponse } from "next/server";
-import Room from "../models/room";
+import Room, { IRoom } from "../models/room";
 
-export const allRoomsController = async (req: NextRequest) => {
-  const resPerPage: number = 8;
-  const rooms = await Room.find();
-  
-  return NextResponse.json({
-    success: true,
-    resPerPage,
-    rooms,
-  });
-}
+import ErrorHandler from "../utils/errorHandler";
+import { catchAsyncError } from "../middlewares/catchAsyncError";
+import APIFilters from "../utils/apiFilters";
+
+export const allRoomsController = catchAsyncError(async (req: NextRequest) => {
+  try {
+    const resPerPage: number = 8;
+    const { searchParams } = new URL(req.url);
+    const queryStr: any = {};
+    const roomsCount = await Room.countDocuments();
+
+    searchParams.forEach((value, key) => {
+      queryStr[key] = value;
+    });
+
+    const apiFilters = new APIFilters(Room, queryStr).search().filter();
+    let rooms: IRoom[] = await apiFilters.query;
+    const filteredRoomsCount = rooms.length;
+
+    apiFilters.pagination(resPerPage);
+    console.log(rooms.length);
+    return NextResponse.json({
+      success: true,
+      resPerPage,
+      filteredRoomsCount,
+      roomsCount,
+      rooms,
+    });
+
+  } catch (error: any) {
+    return NextResponse.json({
+      success: false,
+      message: error.message,
+    })
+  }  
+});
 
 
-export const newRoomController = async (req: NextRequest) => {
-  const body = await req.json();
-  const room = await Room.create(body);
 
-  return NextResponse.json({
-    success: true,
-    room,
-  })
+export const newRoomController = catchAsyncError(async (req: NextRequest) => {
+  try {
+    const body = await req.json();
+    const room = await Room.create(body);
 
-}
+    return NextResponse.json({
+      success: true,
+      room,
+    })
+  } catch (error:any) {
+    return NextResponse.json({
+      success: false,
+      message: error.message,
+    })
+  }
+});
+
 
 // get room detail 
 
-export const getRoomDetails = async (req: NextRequest, {params} : { params : {id: string }}) => {
-  const room = await Room.findById(params.id);
-  if (!room) {
-    return NextResponse.json({
-      success: false,
-      message: "Room not found with this ID",
-    }, {status: 404});
-  }
+export const getRoomDetails = catchAsyncError(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+  
+    try {
+      const room = await Room.findById(params.id);
 
-  return NextResponse.json({
-    success: true,
-    room,
+      throw new ErrorHandler("hello", 404);
+
+      if (!room) {
+        return NextResponse.json({
+          success: false,
+          message: "Room not found with this ID",
+        }, { status: 404 });
+      }
+
+      return NextResponse.json({
+        success: true,
+        room,
+      });
+    } catch (error: any) {
+      return NextResponse.json({
+        success: false,
+        message: error.message,
+      })
+    }
   });
-}
+
 
 // update room details
-export const updateRoomController = async (req: NextRequest, {params} : { params : {id: string }}) => {
-  let room = await Room.findById(params.id);
+export const updateRoomController = catchAsyncError(async (req: NextRequest, { params }: { params: { id: string } }) => {
+  try {
+    let room = await Room.findById(params.id);
   const body = await req.json();
 
   if (!room) {
@@ -63,11 +111,19 @@ export const updateRoomController = async (req: NextRequest, {params} : { params
     success: true,
     room,
   });
-};
+  } catch (error:any) {
+    return NextResponse.json({
+      success: false,
+      message: error.message,
+    })
+  }
+  
+});
 
 
-export const deleteRoomController = async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const room = await Room.findById(params.id);
+export const deleteRoomController = catchAsyncError(async (req: NextRequest, { params }: { params: { id: string } }) => {
+  try {
+    const room = await Room.findById(params.id);
   if (!room) {
     return NextResponse.json({
       success: false,
@@ -81,4 +137,10 @@ export const deleteRoomController = async (req: NextRequest, { params }: { param
     success: true,
     message: "Room is deleted",
   });
-};
+  } catch (error:any) {
+    return NextResponse.json({
+      success: false,
+      message: error.message,
+    })
+  }
+});
