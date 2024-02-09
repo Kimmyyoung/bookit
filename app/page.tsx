@@ -1,7 +1,9 @@
-import { notFound } from 'next/navigation';
+import Home from "@/components/Home"
 
 const page = () => {
-  return notFound()
+  return (
+    <Home />
+  )
 }
 
 export default page
