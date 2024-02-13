@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import Room, { IRoom } from "../models/room";
 
@@ -7,11 +8,12 @@ import APIFilters from "../utils/apiFilters";
 
 export const allRoomsController = catchAsyncError(async (req: NextRequest) => {
   try {
-    const resPerPage: number = 8;
-    const { searchParams } = new URL(req.url);
+    const resPerPage: number = 40;
+    const { searchParams } = new URL(req.url);   
+    
     const queryStr: any = {};
-    const roomsCount = await Room.countDocuments();
-
+    // const roomsCount = await Room.countDocuments();
+    
     searchParams.forEach((value, key) => {
       queryStr[key] = value;
     });
@@ -21,12 +23,12 @@ export const allRoomsController = catchAsyncError(async (req: NextRequest) => {
     const filteredRoomsCount = rooms.length;
 
     apiFilters.pagination(resPerPage);
-    console.log(rooms.length);
+    rooms = await apiFilters.query.clone();
+
     return NextResponse.json({
       success: true,
       resPerPage,
       filteredRoomsCount,
-      roomsCount,
       rooms,
     });
 
@@ -65,8 +67,6 @@ export const getRoomDetails = catchAsyncError(
   
     try {
       const room = await Room.findById(params.id);
-
-      throw new ErrorHandler("hello", 404);
 
       if (!room) {
         return NextResponse.json({

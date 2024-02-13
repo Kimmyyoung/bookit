@@ -12,10 +12,12 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
 
     
   if (!mounted) {
-    return <>
+    return ( 
+      <>
       <Toaster />
       {children}
-    </>
+      </>
+    );
   }
 
   return (
