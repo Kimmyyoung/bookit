@@ -15,18 +15,29 @@ export default function Error({
  
   return (
     <div>
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="text-center">
-          <h2 className="display-4 fw-bold">{error?.message}</h2>
-          <p className="fs-3">
-            <span className="text-danger">Opps!</span> Something went wrong!
-          </p>
-          <p className="lead">Sorry for inconvience</p>
-          <button className="btn btn-primary" onClick={() => reset?.()}>
-            Try again
-          </button>
+   
+        <div className="text-center mt-10">
+          <div className="flex flex-col items-center">
+            <div className="text-blue-500 font-bold text-7xl">
+                404
+            </div>
+
+            <div className="font-bold text-3xl xl:text-7xl lg:text-6xl md:text-5xl mt-10">
+                This page does not exist
+            </div>
+
+            <div className="text-gray-400 font-medium text-sm md:text-sm lg:text-sm mt-8">
+                {error?.message}
+            </div>
         </div>
-      </div>
+        </div>
+
+        <div className="flex py-4 w-full items-center justify-center">
+        <button className="group relative h-12 w-48 overflow-hidden rounded-2xl bg-blue-500 text-lg font-bold text-white" onClick={()=> reset?.()}>
+          Try again!
+          <div className="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+        </button>
+        </div>
     </div>
   )
 }
