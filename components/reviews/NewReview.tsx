@@ -3,53 +3,9 @@ import React from 'react'
 const NewReview = () => {
   return (
     <>
-      <button type="button" 
-        className=""
-        data-bs-toggle="modal"
-        data-bs-target="#ratingModal"
-      >
+      <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
         Submit a review
       </button>
-
-      <div className="Modal"
-        id="ratingModal"
-        tabIndex={-1}
-        aria-labelledby="ratingModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="ratingModalLabel">
-                Submit Review
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                consectetur, mi nec tristique vehicula, elit tellus vulputate
-                ex, nec bibendum libero elit at orci.
-              </p>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn my-3 form-btn w-100"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   )
 }
