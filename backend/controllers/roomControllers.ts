@@ -10,7 +10,7 @@ export const allRoomsController = catchAsyncError(async (req: NextRequest) => {
   try {
     const resPerPage: number = 40;
     const { searchParams } = new URL(req.url);   
-    
+
     const queryStr: any = {};
     // const roomsCount = await Room.countDocuments();
     
