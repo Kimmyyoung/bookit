@@ -1,4 +1,4 @@
-import { bcrypt } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import dbConnect from "@/backend/config/dbConnect";
 import User from "@/backend/models/users";
 import IUser from "@/backend/models/users";
@@ -34,6 +34,7 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
           }
 
           const isPasswordMatched = await bcrypt.compare(password, user.password);
+          //Cannot read properties of undefined (reading 'compare')
 
           if(!isPasswordMatched) {
             throw new Error("Invalid Email or Password");

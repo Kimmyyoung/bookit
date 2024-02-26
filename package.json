@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
+    "@types/bcryptjs": "^2.4.6",
     "@types/react-js-pagination": "^3.0.7",
     "@types/react-paginate": "^7.1.4",
     "@types/react-star-ratings": "^2.3.3",
+    "bcryptjs": "^2.4.3",
     "heroicons": "^2.1.1",
     "mongoose": "^8.1.1",
     "next": "^14.1.0",

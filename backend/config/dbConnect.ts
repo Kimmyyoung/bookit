@@ -15,7 +15,7 @@ const dbConnect = async () => {
 
 
   await mongoose.connect(DB_URI)
-    .then((con) => console.log("db Connected"))
+    .then((con) => console.log("db Connected!"))
 }
 
 export default dbConnect;

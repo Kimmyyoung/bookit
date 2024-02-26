@@ -2,7 +2,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Room, { IRoom } from "../models/room";
 
-import ErrorHandler from "../utils/errorHandler";
 import { catchAsyncError } from "../middlewares/catchAsyncError";
 import APIFilters from "../utils/apiFilters";
 

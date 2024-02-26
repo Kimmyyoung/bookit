@@ -18,12 +18,3 @@ export const registerUserController = catchAsyncError(async(req: NextRequest) =>
     user,
   })
 });
-
-export const AllUsersController = catchAsyncError(async (req: NextRequest) => {
-  const users = await Users.find();
-
-  return NextResponse.json({
-    success: true,
-    users,
-  });
-});
