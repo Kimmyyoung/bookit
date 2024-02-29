@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from 'next-themes';
+import { SessionProvider } from 'next-auth/react';
 
 export function GlobalProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
@@ -14,8 +15,10 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
   if (!mounted) {
     return ( 
       <>
-      <Toaster />
-      {children}
+        <Toaster />
+        <SessionProvider>
+          {children}
+        </SessionProvider>
       </>
     );
   }
@@ -23,8 +26,10 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
   return (
     <>
     <ThemeProvider attribute="class">
-      <Toaster />
-        {children}
+        <Toaster />
+        <SessionProvider>
+          {children}
+        </SessionProvider>
     </ThemeProvider>
     </>
   );

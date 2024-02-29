@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import ButtonLoader from '../layout/ButtonLoader';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -31,8 +31,9 @@ const Login = () => {
 
   }
   return (
-    <div className="flex items-center justify-center py-20">
-    <form className="w-4/12 h-7/12 mx-auto" onSubmit={submitHandler}>
+    <div className="flex flex-col items-center justify-center py-20 w-full">
+      <h1 className="mb-4 text-3xl font-semibold text-gray-900 dark:text-white">Login</h1>
+    <form className="px-4 w-full lg:w-4/12 xl:w-4/12 mx-auto" onSubmit={submitHandler}>
       <div className="mb-5">
     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
         <input type="email" id="email" value={email} onChange={(e)=>setEmail(e.target.value)}  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
@@ -52,7 +53,6 @@ const Login = () => {
           Login
         </button>
         )}
-        
       </form>
       </div>
   )
