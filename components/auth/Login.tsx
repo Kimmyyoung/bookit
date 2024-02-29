@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import ButtonLoader from '../layout/ButtonLoader';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -54,6 +55,10 @@ const Login = () => {
         </button>
         )}
       </form>
+      <div className="flex flex-row">
+        <p className="text-gray-900 dark:text-gray-50 mr-2">You don't have an account?</p>
+        <Link href="/register" className="text-blue-500 dark:text-blue-600">Sign up</Link>
+      </div>
       </div>
   )
 }
