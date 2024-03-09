@@ -18,3 +18,21 @@ export const registerUserController = catchAsyncError(async(req: NextRequest) =>
     user,
   })
 });
+
+// update profile => /api/me/update
+export const updateUserController = catchAsyncError(async (req: NextRequest) => {
+  const body = await req.json();
+
+  const userData = {
+    name: body.name,
+    email: body.email,
+  };
+
+  const user = await Users.findByIdAndUpdate(req.user._id, userData);
+
+  return NextResponse.json({
+    success: true,
+    user,
+  });
+});
+
